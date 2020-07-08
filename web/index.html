@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="A new Flutter project.">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="python_snippets">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+
+  <!-- Skulpt -->
+  <script src="http://www.skulpt.org/js/skulpt.min.js"></script>
+  <script src="http://www.skulpt.org/js/skulpt-stdlib.js"></script>
+
+  <title>Python Snippets</title>
+  <link rel="manifest" href="manifest.json">
+</head>
+<body>
+  <!-- This script installs service_worker.js to provide PWA functionality to
+       application. For more information, see:
+       https://developers.google.com/web/fundamentals/primers/service-workers -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('flutter_service_worker.js');
+      });
+    }
+  </script>
+  <script type="text/javascript">
+    window.codeOutput = "";
+    // output functions are configurable.  This one just appends some text
+    // to a pre element.
+    function builtinRead(x) {
+      if (
+        Sk.builtinFiles === undefined ||
+        Sk.builtinFiles["files"][x] === undefined
+      )
+        throw "File not found: '" + x + "'";
+      return Sk.builtinFiles["files"][x];
+    }
+
+    // Here's everything you need to run a python program in skulpt
+    // grab the code from your textarea
+    // get a reference to your pre element for output
+    // configure the output function
+    // call Sk.importMainWithBody()
+    function runPython(myCode) {
+      // var prog = document.getElementById("mycode").innerText;
+      // var mypre = document.getElementById("output");
+      // mypre.innerHTML = "";
+      Sk.pre = "output";
+      Sk.configure({
+        output: text => window.codeOutput = text,
+        read: builtinRead,
+        __future__: Sk.python3,
+      });
+      // Uncomment this to add a canvas
+      // (Sk.TurtleGraphics || (Sk.TurtleGraphics = {})).target = "mycanvas";
+      var myPromise = Sk.misceval.asyncToPromise(function () {
+        return Sk.importMainWithBody("<stdin>", false, myCode, true);
+      });
+      myPromise.then(
+        function (mod) {
+          console.log(mod)
+          console.log("success");
+        },
+        function (err) {
+          console.log(err.toString());
+        }
+      );
+    }
+  </script>
+  <script src="main.dart.js" type="application/javascript"></script>
+</body>
+</html>
