@@ -1,9 +1,9 @@
 import 'dart:js' as js;
 
 import 'package:flutter/material.dart';
-import 'package:flutter_highlight/flutter_highlight.dart';
-import 'package:flutter_highlight/themes/atom-one-dark-reasonable.dart';
 import 'package:scaffold_responsive/scaffold_responsive.dart';
+
+import './widgets/code_block.dart';
 
 void main() {
   runApp(MyApp());
@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.primary),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: MyHomePage(title: 'Python Snippets'),
@@ -68,7 +69,7 @@ class ExampleSnippet extends StatefulWidget {
 
 class _ExampleSnippetState extends State<ExampleSnippet> {
   final code = '''def add_plus_one(x, y):
-    """Adds two numbers and increments by 1"""
+    """Adds two numbers and increments by 1. Useful for demonstrating how python functions work"""
     return x + y + 1
 
 print(add_plus_one(6, 3))''';
@@ -100,28 +101,14 @@ print(add_plus_one(6, 3))''';
             ],
           ),
           SizedBox(height: 10),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(5),
-            child: HighlightView(
-              code,
-              language: 'python',
-              theme: atomOneDarkReasonableTheme,
-              padding: const EdgeInsets.all(16),
-            ),
-          ),
+          CodeBlock(text: code, language: 'python'),
           SizedBox(height: 30),
           Text('Output:', style: ExampleSnippet._textStyle),
           SizedBox(height: 10),
           if (_output != null)
-            ClipRRect(
-              borderRadius: BorderRadius.circular(5),
-              child: HighlightView(
-                '10',
-                language: 'plaintext',
-                theme: atomOneDarkReasonableTheme,
-                padding: const EdgeInsets.all(16),
-              ),
-            ),
+            CodeBlock(
+              text: _output,
+            )
         ],
       ),
     );
