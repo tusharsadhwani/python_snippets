@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:scaffold_responsive/scaffold_responsive.dart';
 
 import './widgets/code_block.dart';
+import './widgets/editable_code_block.dart';
 
 void main() {
   runApp(MyApp());
@@ -73,10 +74,17 @@ class _ExampleSnippetState extends State<ExampleSnippet> {
     return x + y + 1
 
 print(add_plus_one(6, 3))''';
+  TextEditingController controller;
   String _output;
 
+  @override
+  void initState() {
+    super.initState();
+    controller = TextEditingController(text: code.trimRight());
+  }
+
   void _getOutputFromSkulpt() {
-    js.context.callMethod('runPython', [code]);
+    js.context.callMethod('runPython', [controller.text]);
     var codeOutput = js.context['codeOutput'];
     setState(() {
       _output = codeOutput;
@@ -101,7 +109,8 @@ print(add_plus_one(6, 3))''';
             ],
           ),
           SizedBox(height: 10),
-          CodeBlock(text: code, language: 'python'),
+          // CodeBlock(text: code, language: 'python'),
+          EditableCodeBlock(controller: controller, language: 'python'),
           SizedBox(height: 30),
           Text('Output:', style: ExampleSnippet._textStyle),
           SizedBox(height: 10),
