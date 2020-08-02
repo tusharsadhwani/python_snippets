@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-// import 'package:flutter_highlight/flutter_highlight.dart';
 import 'package:highlight/highlight.dart';
-import 'package:flutter_highlight/themes/atom-one-dark-reasonable.dart';
+
+import '../themes/atom-one-dark-reasonable.dart';
 
 class EditableCodeBlock extends StatefulWidget {
   final TextEditingController controller;

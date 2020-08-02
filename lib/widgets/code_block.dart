@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_highlight/flutter_highlight.dart';
-import 'package:flutter_highlight/themes/atom-one-dark-reasonable.dart';
+
+import '../flutter_highlight.dart';
+import '../themes/atom-one-dark-reasonable.dart';
 
 class CodeBlock extends StatelessWidget {
   final String text;
+  final HighlightEditingController controller;
   final String language;
 
   static const backgroundColor = Color(0xff282c34);
 
   const CodeBlock({
     Key key,
-    @required this.text,
+    this.text,
+    this.controller,
     this.language,
-  }) : super(key: key);
+  })  : assert(text != null || controller != null,
+            'One of text or controller properties must be provided'),
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,8 +32,10 @@ class CodeBlock extends StatelessWidget {
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: HighlightView(
-                text.trimRight(),
+                text: text,
+                controller: controller,
                 language: language ?? 'plaintext',
+                editable: true,
                 theme: atomOneDarkReasonableTheme,
                 padding: const EdgeInsets.all(20),
               ),
