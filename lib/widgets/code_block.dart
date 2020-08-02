@@ -35,7 +35,6 @@ class CodeBlock extends StatelessWidget {
                 text: text,
                 controller: controller,
                 language: language ?? 'plaintext',
-                editable: true,
                 theme: atomOneDarkReasonableTheme,
                 padding: const EdgeInsets.all(20),
               ),

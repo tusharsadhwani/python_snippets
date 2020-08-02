@@ -5,10 +5,10 @@ import 'package:highlight/highlight.dart' show highlight, Node;
 /// Highlight Flutter Widget
 class HighlightView extends StatefulWidget {
   /// The original code to be highlighted
-  String source;
+  final String text;
 
   /// The controller for the highlighted text
-  HighlightEditingController controller;
+  final HighlightEditingController controller;
 
   /// Highlight language
   ///
@@ -37,7 +37,7 @@ class HighlightView extends StatefulWidget {
   final TextStyle textStyle;
 
   HighlightView({
-    String text,
+    this.text,
     this.controller,
     this.language,
     this.theme = const {},
@@ -45,15 +45,8 @@ class HighlightView extends StatefulWidget {
     this.padding,
     this.textStyle,
     int tabSize = 8, // TODO: https://github.com/flutter/flutter/issues/50087
-  }) {
-    if (controller == null) {
-      source = text.replaceAll('\t', ' ' * tabSize);
-      controller = HighlightEditingController(language, theme);
-      controller.text = source;
-    } else {
-      source = controller.text.replaceAll('\t', ' ' * tabSize);
-    }
-  }
+  }) : assert(text != null || controller != null,
+            'One of text or controller properties must be provided');
 
   static const _rootKey = 'root';
   static const _defaultFontColor = Color(0xff000000);
@@ -69,6 +62,21 @@ class HighlightView extends StatefulWidget {
 }
 
 class _HighlightViewState extends State<HighlightView> {
+  String source;
+  HighlightEditingController controller;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.controller == null) {
+      controller = HighlightEditingController(widget.language, widget.theme);
+      controller.text = widget.text;
+    } else {
+      controller = widget.controller;
+    }
+    source = controller.text;
+  }
+
   @override
   Widget build(BuildContext context) {
     var _textStyle = TextStyle(
@@ -85,20 +93,17 @@ class _HighlightViewState extends State<HighlightView> {
           HighlightView._defaultBackgroundColor,
       padding: widget.padding,
       child: widget.editable
-          ? LimitedBox(
-              maxWidth: 800,
-              child: TextField(
-                controller: widget.controller,
-                decoration: InputDecoration(border: InputBorder.none),
-                maxLines: null,
-                style: widget.theme[HighlightView._rootKey],
-              ),
+          ? TextField(
+              controller: controller,
+              decoration: InputDecoration(border: InputBorder.none),
+              maxLines: null,
+              style: widget.theme[HighlightView._rootKey],
             )
           : RichText(
               text: TextSpan(
                 style: _textStyle,
                 children: getHighlightTextSpan(
-                  widget.source,
+                  source,
                   widget.language,
                   widget.theme,
                 ),

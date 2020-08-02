@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:scaffold_responsive/scaffold_responsive.dart';
 
 import './widgets/code_block.dart';
+import './widgets/editable_code_block.dart';
 import './flutter_highlight.dart';
 import './themes/atom-one-dark-reasonable.dart';
 
@@ -114,8 +115,8 @@ print(add_plus_one(6, 3))''';
             ],
           ),
           SizedBox(height: 10),
-          CodeBlock(text: code, language: 'python'),
-          // CodeBlock(controller: controller, language: 'python'),
+          EditableCodeBlock(text: code, language: 'python'),
+          // EditableCodeBlock(controller: controller, language: 'python'),
           SizedBox(height: 30),
           Text('Output:', style: ExampleSnippet._textStyle),
           SizedBox(height: 10),
