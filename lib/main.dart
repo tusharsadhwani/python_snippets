@@ -71,11 +71,18 @@ class ExampleSnippet extends StatefulWidget {
 }
 
 class _ExampleSnippetState extends State<ExampleSnippet> {
-  final code = '''def add_plus_one(x, y):
-    """Adds two numbers and increments by 1. Useful for demonstrating how python functions work"""
-    return x + y + 1
+  final code = '''def bang(f):
+    """Decorator used for functions that return a string. Adds an exclamation to
+    the end of the returned string."""
+    def func(*args):
+        return f(*args) + '!'
+    return func
 
-print(add_plus_one(6, 3))''';
+@bang
+def greet(name):
+    return 'Hello, {}'.format(name)
+
+print(greet('Tushar'))''';
   HighlightEditingController controller;
   String _output;
 
@@ -93,7 +100,7 @@ print(add_plus_one(6, 3))''';
     js.context.callMethod('runPython', [controller.text]);
     var codeOutput = js.context['codeOutput'];
     setState(() {
-      _output = codeOutput;
+      _output = codeOutput.toString()?.trimRight() ?? '';
     });
   }
 
@@ -115,15 +122,15 @@ print(add_plus_one(6, 3))''';
             ],
           ),
           SizedBox(height: 10),
-          EditableCodeBlock(text: code, language: 'python'),
-          // EditableCodeBlock(controller: controller, language: 'python'),
+          EditableCodeBlock(controller: controller, language: 'python'),
           SizedBox(height: 30),
           Text('Output:', style: ExampleSnippet._textStyle),
           SizedBox(height: 10),
           if (_output != null)
             CodeBlock(
+              key: ValueKey(_output),
               text: _output,
-            )
+            ),
         ],
       ),
     );

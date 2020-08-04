@@ -32,7 +32,7 @@ class EditableCodeBlock extends StatelessWidget {
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Container(
-                width: 1000, //TODO: make this the width of the textspan
+                width: 1000, //TODO: use TextPainter to calculate width
                 child: HighlightView(
                   text: text,
                   controller: controller,
