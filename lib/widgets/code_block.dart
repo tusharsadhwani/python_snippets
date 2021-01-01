@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_highlight/flutter_highlight.dart';
 
-import '../flutter_highlight.dart';
 import '../themes/atom-one-dark-reasonable.dart';
 
 class CodeBlock extends StatelessWidget {

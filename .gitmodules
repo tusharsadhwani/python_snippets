@@ -1,0 +1,3 @@
+[submodule "vendor/highlight"]
+	path = vendor/highlight
+	url = https://github.com/tusharsadhwani/highlight

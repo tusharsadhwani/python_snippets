@@ -2,10 +2,10 @@ import 'dart:js' as js;
 
 import 'package:flutter/material.dart';
 import 'package:scaffold_responsive/scaffold_responsive.dart';
+import 'package:flutter_highlight/flutter_highlight.dart';
 
 import './widgets/code_block.dart';
 import './widgets/editable_code_block.dart';
-import './flutter_highlight.dart';
 import './themes/atom-one-dark-reasonable.dart';
 
 void main() {
