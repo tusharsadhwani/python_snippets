@@ -43,13 +43,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.15.0-nullsafety.5"
-  cupertino_icons:
-    dependency: "direct main"
-    description:
-      name: cupertino_icons
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.3"
   fake_async:
     dependency: transitive
     description:
@@ -65,9 +58,11 @@ packages:
   flutter_highlight:
     dependency: "direct main"
     description:
-      path: "vendor/highlight/flutter_highlight"
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: "031fbfa5d5ede8ccb0a55b872d1a0274a097224e"
+      url: "https://github.com/tusharsadhwani/flutter_highlight"
+    source: git
     version: "0.6.0+1"
   flutter_sidebar:
     dependency: transitive
@@ -84,9 +79,9 @@ packages:
   highlight:
     dependency: "direct main"
     description:
-      path: "vendor/highlight/highlight"
-      relative: true
-    source: path
+      name: highlight
+      url: "https://pub.dartlang.org"
+    source: hosted
     version: "0.6.0"
   matcher:
     dependency: transitive
