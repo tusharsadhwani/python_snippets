@@ -20,12 +20,8 @@ jobs:
 
       - name: Build
         run: |
-          git submodule init
-          git submodule update
           flutter build web
-          cd ./build/web
-          echo "pysnippets.xyz" >> CNAME
-          cd ../../
+          echo "pysnippets.xyz" >> ./build/web/CNAME
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
