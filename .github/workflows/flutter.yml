@@ -14,14 +14,13 @@ jobs:
       - name: Setup Flutter
         run: |
           sudo snap install flutter --classic
-          flutter channel beta
-          flutter upgrade
           flutter config --enable-web
+          flutter upgrade
 
       - name: Build
         run: |
           flutter build web
-          echo "pysnippets.xyz" >> ./build/web/CNAME
+          echo "snippets.live" >> ./build/web/CNAME
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
